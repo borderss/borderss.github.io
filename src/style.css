@@ -1,0 +1,49 @@
+:root {
+  --text-white: #fff;
+  --text-grey: #C4C4C4;
+
+  --background: #000;
+  --gray-2: #262626;
+}
+
+* {
+  font-family: "SFPRO";
+  font-weight: "bold";
+  color: #fff;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+
+  background-color: black;
+}
+
+.content-field {
+  width: 80%;
+  height: fit-content;
+
+  min-width: 300px;
+  min-height: 150px;
+
+  margin-inline: auto;
+  margin-block: 89px;
+}
+
+.title-bar > h1 {
+  font-size: 50px;
+  line-height: 60px;
+}
+
+.title-bar > a {
+  font-size: 16px;
+  line-height: 24px;
+
+  font-family: "SFPRO";
+  font-weight: regular;
+}
+
+.title-bar > a > span {
+  color: var(--text-grey)
+}
