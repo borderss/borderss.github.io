@@ -1,15 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./assets/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <script type="module" crossorigin src="/kanban/assets/index.738c9d06.js"></script>
-    <link rel="stylesheet" href="/kanban/assets/index.3fce1f81.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+  
+  <link rel="stylesheet" href="/kanban/assets/index.11f8f551.css">
+</head>
+<body>
+  <div class="content-field">
+    <div class="title-bar">
+      <h1>Roadmap</h1>
+      <a href="https://www.isaacnc.com/" target="_blank">By Isaac N.C. <span>Visit website</span></a>
+    </div>
+    <div class="boards">
+      <div id="backlog">
+        <h2>Backlog</h2>
+        <div class="card-container">
+          <div class="card" style="background-color: var(--pink);">
+            <h3>Twilio integration</h3>
+            <p>Create new note via SMS. Support text, audio, links, and media.</p>
+          </div>
+          <div class="card" style="background-color: var(--purple);">
+            <h3>Markdown support</h3>
+            <p>Markdown shorthand converts to formatting</p>
+            <div>Formatting</div>
+          </div>  
+        </div>
+      </div>
+      <div id="todo">
+        <h2>To do</h2>
+        <div class="card-container">
+          <div class="card" style="background-color: var(--red);">
+            <h3>Tablet view</h3>
+          </div>
+          <div class="card" style="background-color: var(--purple);">
+            <h3>Audio recording in note</h3>
+            <p>Show audio in a note and playback UI</p>
+            <div>Note interface</div>
+          </div>
+          <div class="card" style="background-color: var(--purple);">
+            <h3>Bookmark in note</h3>
+            <p>Show rich link UI in a note, and feature to render website screenshot</p>
+            <div>Note interface</div>
+          </div>
+          <div class="card" style="background-color: var(--purple);">
+            <h3>Image viewer</h3>
+            <p>Opens when clicking on the thumbnail in the list or on the image in the note</p>
+          </div>
+        </div>
+      </div>
+      <div id="inprogress">
+        <h2>In progress</h2>
+        <div class="card-container">
+          <div class="card" style="background-color: var(--red);">
+            <h3>Mobile view</h3>
+            <p>Functions for both web responsive and native apps. Note: Android and iOS will need unique share icons</p>
+          </div>
+          <div class="card" style="background-color: var(--red);">
+            <h3>Desktop view</h3>
+            <p>PWA for webiste and native apps. Note: Windows and Mac will need unique share icons.</p>
+          </div>
+          <div class="card" style="background-color: var(--blue);">
+            <h3>Formatting options</h3>
+            <p>Mobile formatting bar expands and collapses when tapping the format icon.</p>
+          </div>
+          <div class="card" style="background-color: var(--purple);">
+            <h3>Media in note</h3>
+            <p>Image & video with player UI</p>
+            <div>Note interface</div>
+          </div>
+        </div>
+      </div>
+      <div id="designed">
+        <h2>Designed</h2>
+        <div class="card-container">
+          <div class="card" style="background-color: var(--green);">
+            <h3>Audio recording</h3>
+            <p>Interface for when recording a new audio note</p>
+            <div>New note</div>
+          </div>
+          <div class="card" style="background-color: var(--green);">
+            <h3>Bookmarking</h3>
+            <p>Interface for when creating a new link note.</p>
+            <div>New note</div>
+          </div>
+          <div class="card" style="background-color: var(--blue);">
+            <h3>Mobile home screen</h3>
+            <p>Folders, tags, and notes lists are sorted by recent.</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+  <script src="/src/script.js"></script>
 </html>
