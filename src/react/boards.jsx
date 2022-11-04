@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import card from "./card"
 import Card from "./card"
+import Board from "./board"
 
 export default function Boards() {
   const [data, setData] = useState(
@@ -196,20 +196,21 @@ export default function Boards() {
     const numRegex = /([\d]+)/
 
     let cardKey = e.dataTransfer.getData("key")
-
-    let originBoard =  strRegex.exec(cardKey)[0]
-    let originId = numRegex.exec(cardKey)[0]
-
-    let targetBoard = e.target.closest(".board").id
-    let targetId = numRegex.exec(e.target.closest(".card").id)[0]
-    
     let currData = Object.assign({}, data)
 
+    let originBoard = strRegex.exec(cardKey)[0]
+    let originId = numRegex.exec(cardKey)[0]
     let entry = currData[originBoard].splice(originId, 1)[0]
 
-    currData[targetBoard].splice(targetId, 0, entry)
+    let targetBoard = e.target.closest(".board").id
 
-    console.log(currData)
+
+    if (e.target.classList.contains("board") || e.target.parentElement.classList.contains("board")) {
+      currData[targetBoard].splice(0, 0, entry)
+    } else if(e.target.classList.contains("card") || e.target.parentElement.classList.contains("card")) {
+      currData[targetBoard].splice(numRegex.exec(e.target.closest(".card").id)[0], 0, entry)
+    }
+
     setData(currData)
   }
 
@@ -217,30 +218,10 @@ export default function Boards() {
 
   return (
     <div className={"boards"}>
-      <div id={"backlog"} className={"board"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleBoardDrop(e)}>
-        <h2>Backlog</h2>
-        <div className={"card-container droppable"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}>
-          {genCards(data.backlog, "backlog")}
-        </div>
-      </div>
-      <div id={"todo"} className={"board"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleBoardDrop(e)}>
-        <h2>To do</h2>
-        <div className={"card-container droppable"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}>
-          {genCards(data.todo, "todo")}
-        </div>
-      </div>
-      <div id={"inprogress"} className={"board"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleBoardDrop(e)}>
-        <h2>In progress</h2>
-        <div className={"card-container droppable"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}>
-          {genCards(data.inprogress, "inprogress")}
-        </div>
-      </div>
-      <div id={"designed"} className={"board"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleBoardDrop(e)}>
-        <h2>Designed</h2>
-        <div className={"card-container droppable"} onDragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}>
-          {genCards(data.designed, "designed")}
-        </div>
-      </div>
+      <Board id={"backlog"} title={"Backlog"} data={genCards(data.backlog, "backlog")} dragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}/>
+      <Board id={"todo"} title={"To do"} data={genCards(data.todo, "todo")} dragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}/>
+      <Board id={"inprogress"} title={"In progress"} data={genCards(data.inprogress, "inprogress")} dragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}/>
+      <Board id={"designed"} title={"Designed"} data={genCards(data.designed, "designed")} dragOver={e=>handleDragOver(e)} onDrop={e=>handleCardDrop(e)}/>
     </div>
   )
 }
