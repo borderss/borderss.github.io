@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BoardRequest;
+use App\Http\Resources\BoardResource;
 use App\Models\Board;
 
 class BoardController extends Controller
@@ -14,17 +15,7 @@ class BoardController extends Controller
      */
     public function index()
     {
-        // return BoardResourc
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return BoardResource::collection(Board::all());
     }
 
     /**
@@ -35,7 +26,9 @@ class BoardController extends Controller
      */
     public function store(BoardRequest $request)
     {
-        //
+        $new_board = Board::create($request->validated());
+        $board = Board::create($new_board);
+        return new BoardRequest($board);
     }
 
     /**
@@ -46,18 +39,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Board  $board
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Board $board)
-    {
-        //
+        return new BoardResource($board);
     }
 
     /**
@@ -69,7 +51,8 @@ class BoardController extends Controller
      */
     public function update(BoardRequest $request, Board $board)
     {
-        //
+        $board->update($request->validated());
+        return new BoardResource($board);
     }
 
     /**
@@ -80,6 +63,7 @@ class BoardController extends Controller
      */
     public function destroy(Board $board)
     {
-        //
+        $board->delete();
+        return new BoardResource($board);
     }
 }
