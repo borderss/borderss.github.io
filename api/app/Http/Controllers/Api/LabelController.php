@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\LabelRequest;
 use App\Http\Resources\LabelResource;
 use App\Models\Label;
 use Illuminate\Http\Request;
@@ -24,7 +26,7 @@ class LabelController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(LabelResource $request)
+  public function store(LabelRequest $request)
   {
     $new_label = Label::create($request->validated());
     $label = Label::create($new_label);
@@ -50,7 +52,7 @@ class LabelController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(LabelResource $request, Label $label)
+  public function update(LabelRequest $request, Label $label)
   {
     $label->update($request->validated());
     return new LabelResource($label);

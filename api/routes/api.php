@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::post('/login', 'Auth\UserAuthController@login');
+Route::apiResource('boards', BoardController::class);
+Route::apiResource('tasks', TaskController::class);
+Route::apiResource('labels', LabelController::class);
 
-// Route::get('/tasks', [TaskController::class, 'index']);
-
-Route::apiResource('/boards', BoardController::class);
-Route::apiResource('/tasks', TaskController::class);
-Route::apiResource('/labels', LabelController::class);
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
