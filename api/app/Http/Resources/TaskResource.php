@@ -17,12 +17,13 @@ class TaskResource extends JsonResource
   {
     return [
       'id' => $this->id,
-      'user_id' => $this->user_id,
-      'board_id' => $this->board_id,
+      'user_id' => $this->user,
+      'board_id' => $this->board,
       'title' => $this->title,
       'desc' => $this->desc,
       'color' => $this->color,
-      'labels' => LabelResource::collection(Label::all()->where('task_id', $this->id))
+      'labels' => $this->labels
     ];
+    // LabelResource::collection(Label::all()->where('task_id', $this->id))
   }
 }

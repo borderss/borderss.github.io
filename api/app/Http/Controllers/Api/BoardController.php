@@ -29,8 +29,7 @@ class BoardController extends Controller
   public function store(BoardRequest $request)
   {
     $new_board = Board::create($request->validated());
-    $board = Board::create($new_board);
-    return new BoardResource($board);
+    return new BoardResource($new_board);
   }
 
   /**

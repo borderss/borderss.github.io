@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
 {
-    use HasFactory;
-    protected $fillable = ['id', 'name'];
+  use HasFactory;
+  protected $fillable = [
+    'id',
+    'name'
+  ];
 
-    public function tasks()
-    { 
-      return $this->hasMany(Task::class);
-    }
+  public function tasks()
+  {
+    return $this->hasMany(Task::class);
+  }
 }
