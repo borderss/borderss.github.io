@@ -24,6 +24,5 @@ class TaskResource extends JsonResource
       'color' => $this->color,
       'labels' => $this->labels
     ];
-    // LabelResource::collection(Label::all()->where('task_id', $this->id))
   }
 }
