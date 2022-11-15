@@ -22,11 +22,6 @@ class Task extends Model
     return $this->hasMany(Label::class);
   }
 
-  // public function board()
-  // {
-  //   return $this->belongsTo(Board::class, "board_id");
-  // }
-
   public function user()
   {
     return $this->belongsTo(User::class, "user_id");
