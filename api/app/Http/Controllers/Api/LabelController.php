@@ -29,9 +29,7 @@ class LabelController extends Controller
   public function store(LabelRequest $request)
   {
     $new_label = Label::create($request->validated());
-    $label = Label::create($new_label);
-
-    return new LabelResource($label);
+    return new LabelResource($new_label);
   }
 
   /**

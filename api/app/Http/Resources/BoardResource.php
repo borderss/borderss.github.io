@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Controllers\Api\TaskController;
 use App\Models\Task;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class BoardResource extends JsonResource
     return [
       'id' => $this->id,
       'name' => $this->name,
-      'tasks' => $this->tasks
+      'tasks' => TaskResource::collection(Task::all()->where('board_id', '=', $this->id))
     ];
     // TaskResource::collection(Task::all()->where('board_id', '=', $this->id))
   }

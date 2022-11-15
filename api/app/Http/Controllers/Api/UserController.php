@@ -42,7 +42,7 @@ class UserController extends Controller
       ]);
     }
 
-    /** @var \App\Models\MyUserModel $user **/
+    /** @var \App\Models\User $user **/
     $user = Auth::user();
 
     $token = $user->createToken('accessToken')->accessToken;
@@ -54,7 +54,7 @@ class UserController extends Controller
 
   public function logout()
   {
-    /** @var \App\Models\MyUserModel $user **/
+    /** @var \App\Models\User $user **/
     $user = Auth::user();
     $user->token()->revoke();
 

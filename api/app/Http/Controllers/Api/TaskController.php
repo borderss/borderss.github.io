@@ -29,10 +29,7 @@ class TaskController extends Controller
   public function store(TaskRequest $request)
   {
     $new_task = Task::create($request->validated());
-    $new_task['owner_id'] = auth()->user()->id;
-    $task = Task::create($new_task);
-
-    return new TaskResource($task);
+    return new TaskResource($new_task);
   }
 
   /**
