@@ -21,6 +21,5 @@ class BoardResource extends JsonResource
       'name' => $this->name,
       'tasks' => TaskResource::collection(Task::all()->where('board_id', '=', $this->id))
     ];
-    // TaskResource::collection(Task::all()->where('board_id', '=', $this->id))
   }
 }
