@@ -86,7 +86,6 @@ export default function Boards() {
     }
   )
 
-  
 
   const genCards = (board, boardName) => {
     const output = new Array()
