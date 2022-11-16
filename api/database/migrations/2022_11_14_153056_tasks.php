@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('board_id')->references('id')->on('boards');
             $table->string('title');
-            $table->string('desc')->default(null);
+            $table->string('desc');
             $table->string('color');
             $table->timestamps();
       });
