@@ -1,105 +1,62 @@
 import React, { useEffect, useState } from "react"
+import { getBoards, getUser, getUserTasks } from "../static/util"
 import Card from "./card"
 import Board from "./board"
 
 export default function Boards() {
-  const [data, setData] = useState(
-    {
-      backlog: [
-        {
-          title: "Twilio integration",
-          desc: "Create new note via SMS. Support text, audio, links, and media.",
-          color: "pink",
-        },
-        {
-          title: "Markdown support",
-          desc: "Markdown shorthand converts to formatting",
-          tag: "Formatting",
-          color: "purple",
-        },
-      ],
-      todo: [
-        {
-          title: "Audio recording in note",
-          desc: "Show audio in a note and playback UI",
-          tag: "Note interface",
-          color: "purple",
-        },
-        {
-          title: "Tablet view",
-          color: "red",
-        },
-        {
-          title: "Bookmark in note",
-          desc: "Show rich link UI in a note, and feature to render website screenshot",
-          tag: "Note interface",
-          color: "purple",
-        },
-        {
-          title: "Image viewer",
-          desc: "Opens when clicking on the thumbnail in the list or on the image in the note",
-          color: "purple",
-        },
-      ],
-      inprogress: [
-        {
-          title: "Mobile view",
-          desc: "Functions for both web responsive and native apps. Note: Android and iOS will need unique share icons",
-          color: "red",
-        },
-        {
-          title: "Desktop view",
-          desc: "PWA for webiste and native apps. Note: Windows and Mac will need unique share icons.",
-          color: "red",
-        },
-        {
-          title: "Formatting options",
-          desc: "Mobile formatting bar expands and collapses when tapping the format icon.",
-          color: "blue",
-        },
-        {
-          title: "Media in note",
-          desc: "Image & video with player UI",
-          tag: "Note interface",
-          color: "purple",
-        },
-      ],
-      designed: [
-        {
-          title: "Audio recording",
-          desc: "Interface for when recording a new audio note",
-          tag: "New note",
-          color: "green",
-        },
-        {
-          title: "Bookmarking",
-          desc: "Interface for when creating a new link note.",
-          tag: "New note",
-          color: "green",
-        },
-        {
-          title: "Mobile home screen",
-          desc: "Folders, tags, and notes lists are sorted by recent.",
-          color: "blue",
-        },
-      ]
+  const [tasks, setTasks] = useState([])
+
+  const [boards, setBoards] = useState([])
+
+  async function fetchBoards() {
+    if (getUser()) {
+      var result = await getBoards()      
+      setBoards(result)
     }
-  )
+  }
 
+  async function fetchUserTasks() {
+    if (getUser()) {
+      var taskData = await getUserTasks()
+      setTasks(taskData.tasks)
+    }
+  }
 
-  const genCards = (board, boardName) => {
-    const output = new Array()
+  const genBoards = () => {
+    let taskDataArr = {
+      1: [],
+      2: [],
+      3: [],
+      4: []
+    }
 
-    for (let i = 0; i < board.length; i++) {
-      const card = board[i];
+    if (tasks) {
+      tasks.forEach((task) => {
+        console.log(task)
+        if (!task.labels && !task.desc) {
+          taskDataArr[task.board_id].push(<Card key={task.id} id={task.id} title={task.title} color={task.color}/>)
+        } else if (!task.labels && task.desc) {
+          taskDataArr[task.board_id].push(<Card key={task.id} id={task.id} title={task.title} desc={task.desc} color={task.color}/>)
+        } else if(task.labels && task.desc) {
+          taskDataArr[task.board_id].push(<Card key={task.id} id={task.id} title={task.title} desc={task.desc} color={task.color} labels={task.labels}/>)
+        }
+      })
+    }
 
-      if (!card.tag && !card.desc) {
-        output.push(<Card key={i} id={boardName + i} title={card.title} color={card.color}/>)
-      } else if (!card.tag && card.desc) {
-        output.push(<Card key={i} id={boardName + i} title={card.title} desc={card.desc} color={card.color}/>)
-      } else if(card.tag && card.desc) {
-        output.push(<Card key={i} id={boardName + i} title={card.title} desc={card.desc} tag={card.tag} color={card.color}/>)
-      }
+    let output = new Array()
+
+    if (boards && boards.data) {
+      boards.data.forEach((board, index) => {
+        output.push(
+          <Board 
+          key={index}
+          id={board.id}
+          taskData={taskDataArr[board.id]}
+          title={board.name} 
+          dragOver={e=>handleDragOver(e)} 
+          onDrop={e=>handleCardDrop(e)}/>
+        )
+      })
     }
 
     return output
@@ -137,33 +94,35 @@ export default function Boards() {
     setData(currData)
   }
 
+  useEffect(() => {
+    fetchBoards()
+    fetchUserTasks()
+  }, [])
+  
+
+  // <div id="backlog" class="new-card hidden">
+  //   <form method="post" >
+  //     <input name="title" placeholder="Title.." required pattern="[a-zA-Z0-9 ]+">
+  //     <textarea name="description" placeholder="Description.." pattern="[a-zA-Z0-9 ]+"></textarea>
+  //     <input type="hidden" name="labels" value="{}">
+  //     <input type="hidden" name="board" value="backlog">
+  //     <input type="hidden" name="backlogBoard" value="backlog">
+  //     <div class="labels">
+  //       <div>
+  //       </div>
+  //       <div>
+  //         <input name="label" placeholder="New label..." maxlength="28" pattern="[a-zA-Z0-9 ]+">
+  //         <span>Card color</span>
+  //         <input type="color" name="color" class="color-picker" value="#7678D1">
+  //       </div>
+  //     </div>
+  //     <button class="submitCreateCard" name="submit">Create</button>
+  //   </form>
+  // </div>
+
   return (
     <div className={"boards"}>
-      <Board 
-      id={"backlog"} 
-      title={"Backlog"} 
-      data={genCards(data.backlog, "backlog")} 
-      dragOver={e=>handleDragOver(e)} 
-      onDrop={e=>handleCardDrop(e)}/>
-
-      <Board 
-      id={"todo"} 
-      title={"To do"} 
-      data={genCards(data.todo, "todo")} 
-      dragOver={e=>handleDragOver(e)} 
-      onDrop={e=>handleCardDrop(e)}/>
-
-      <Board id={"inprogress"} 
-      title={"In progress"} 
-      data={genCards(data.inprogress, "inprogress")} 
-      dragOver={e=>handleDragOver(e)} 
-      onDrop={e=>handleCardDrop(e)}/>
-
-      <Board id={"designed"} 
-      title={"Designed"}
-      data={genCards(data.designed, "designed")} 
-      dragOver={e=>handleDragOver(e)} 
-      onDrop={e=>handleCardDrop(e)}/>
+      {genBoards()}
     </div>
   )
 }

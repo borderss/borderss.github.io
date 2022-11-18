@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('board_id')->references('id')->on('boards');
+            $table->foreignId('board_id')->constrained();
             $table->string('title');
             $table->string('desc')->default(null);
             $table->string('color');

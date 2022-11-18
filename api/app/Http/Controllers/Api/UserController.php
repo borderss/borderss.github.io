@@ -37,6 +37,7 @@ class UserController extends Controller
 
     if (!Auth::attempt($validated)) {
       return response()->json([
+        'type' => 'error',
         'data' => "Credential don't match any recorded profiles."
       ]);
     }

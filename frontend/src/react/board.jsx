@@ -24,7 +24,7 @@ function board(props) {
     })
   }
 
-  let cardsData = props.data.length != 0 ? props.data : (
+  let cardsData = props.taskData.length > 0 ? props.taskData : (
     <div className={"empty-card-hint"}>
       Drop a card here!
     </div>

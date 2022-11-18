@@ -35,13 +35,13 @@ export default function AuthSection(props) {
 
   if(props.mode == "logged_in"){
     form = 
-    <form ref={profileBtnRef} className="form-field hidden" onSubmit={(e) => props.handleFormSubmit(e, "log_out")}>
+    <form ref={profileBtnRef} className="form-field hidden" onSubmit={(e) => props.handleFormSubmit(e, "logged_in")}>
       <button type="submit">Sign out</button>
     </form>
 
   } else if(props.mode == "login"){
     form = 
-    <form ref={profileBtnRef} className="form-field hidden" onSubmit={(e) => props.handleFormSubmit(e, "log_in")}>
+    <form ref={profileBtnRef} className="form-field hidden" onSubmit={(e) => props.handleFormSubmit(e, "login")}>
       <h3>Login</h3>
       <input type="text" name="email" autoComplete="email" placeholder="example@gmail.com"/>
       <input type="password" name="password" autoComplete="current-password" placeholder="password..."/>

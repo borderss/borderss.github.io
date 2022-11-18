@@ -1,17 +1,17 @@
 @font-face {
   font-family: "SFPro";
   font-weight: medium;
-  src: url("/public/fonts/SF-Pro-Text-Medium.otf") format("OpenType");
+  src: url("/fonts/SF-Pro-Text-Medium.otf") format("OpenType");
 }
 
 @font-face {
   font-family: "SFPro";
   font-weight: thin;
-  src: url("/public/fonts/SF-Pro-Text-Regular.otf") format("OpenType");
+  src: url("/fonts/SF-Pro-Text-Regular.otf") format("OpenType");
 }
 
 @font-face {
   font-family: "SFPro";
   font-weight: bold;
-  src: url("/public/fonts/SF-Pro-Text-Bold.otf") format("OpenType");
+  src: url("/fonts/SF-Pro-Text-Bold.otf") format("OpenType");
 }
