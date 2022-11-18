@@ -51,6 +51,7 @@ function board(props) {
             desc={task.desc}
             color={task.color}
             labels={task.labels}
+            onCardDelete={handleCardDelete}
           />
         )
       })
@@ -137,6 +138,19 @@ function board(props) {
         genBoardCards()
       }
     }
+  }
+
+  const handleCardDelete = (card_id) => {
+    taskData.forEach(task => {
+      if (task.id == card_id) {
+        taskData.splice(taskData.indexOf(task), 1)
+
+        setTaskData(taskData)
+        genBoardCards()
+
+        deleteTask(card_id)
+      }
+    })
   }
 
   return (

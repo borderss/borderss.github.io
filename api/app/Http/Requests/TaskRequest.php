@@ -28,6 +28,8 @@ class TaskRequest extends FormRequest
       'board_id' => 'required',
       'title' => 'required',
       'desc' => 'nullable',
+      'labels' => 'nullable|array',
+      'labels.*' => 'required|string',
       'color' => 'required',
     ];
   }

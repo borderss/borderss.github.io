@@ -28,3 +28,4 @@ Route::middleware(['auth:api'])->group(function() {
   Route::apiResource('tasks', TaskController::class);
   Route::apiResource('labels', LabelController::class);
 });
+

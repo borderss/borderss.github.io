@@ -172,12 +172,13 @@ const createTask = async (board, title, desc = null, color, labels = null) => {
 const deleteTask = (id) => {
   if (userExists()) {
     apiMethod(`/tasks/${id}`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
       }
     }).then((data) => {
+      console.log(data)
       return data
     })
   } else {

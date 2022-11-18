@@ -56,7 +56,7 @@ function card(props) {
       {labelArr.length > 0 ? <div className="labelContainer">{labelArr}</div> : ""}
 
       <span className="hoverOptions">
-        <button className="delete" name="deleteBtn" value="" onClick={(e) => {e.preventDefault()}}>Delete card</button>
+        <button className="delete" name="deleteBtn" value="" type="button" onClick={(e) => {props.onCardDelete(props.id)}}>Delete card</button>
       </span>
     </form>
   )
