@@ -1,7 +1,63 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { getUserTasks, createTask, deleteTask, createLabel, deleteLabel, getUser } from "../static/util"
+import Card from "./card"
+
 
 function board(props) {
+  const [taskData, setTaskData] = useState([])
+  const [labelData, setLabelData] = useState([])
+  const [tasks, setTasks] = useState([])
+
+
+  useEffect(() => {
+    fetchUserTasks()
+  }, [])
+
+  useEffect(() => {
+    genBoardCards()
+  }, [taskData])
+
+  async function fetchUserTasks() {
+    if (getUser()) {
+      var data = await getUserTasks()
+
+      var localTasks = new Array()
+
+      data.tasks.forEach((task) => {
+        if(task.board_id == props.id){
+          console.log("new task")
+          localTasks.push(task)
+        }
+      })
+
+      setTaskData(localTasks)
+    }
+  }
+
   let target 
+
+  const genBoardCards = () => {
+    let tempData = new Array()
+
+    if (taskData) {
+      taskData.forEach((task) => {
+        tempData.push(
+          <Card
+            key={task.id}
+            id={task.id}
+            title={task.title}
+            desc={task.desc}
+            color={task.color}
+            labels={task.labels}
+          />
+        )
+      })
+
+      setTasks(tempData)
+    }
+  }
 
   const DragEnter = (e) => {
     if (e.target.classList.contains("board")) {
@@ -24,7 +80,7 @@ function board(props) {
     })
   }
 
-  let cardsData = props.taskData.length > 0 ? props.taskData : (
+  let cardsData = tasks.length > 0 ? tasks : (
     <div className={"empty-card-hint"}>
       Drop a card here!
     </div>
@@ -34,6 +90,54 @@ function board(props) {
     board.style.removeProperty('outline')
     board.setAttribute("style", `background-color: var(--gray); transition: box-shadow 0.5s, transform 0.5s`)
   })
+
+  const handleToggleAddCard = (event)=> {
+    document.querySelectorAll(".addCard").forEach(e => {
+      if (e != event.target.parentElement.parentElement.querySelector(".addCard")) {
+        e.classList.add("hidden")
+      }
+    })
+    event.target.parentElement.parentElement.querySelector(".addCard").classList.toggle("hidden")
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+
+    let field = e.target
+    let labelInput = field.querySelector("[name='label']")
+
+    let form = e.target.closest("form")
+
+    if (labelInput == document.activeElement) {
+      if (labelInput.value != "") {
+        let container = field.querySelector(".labelContainer")
+        let newTag = document.createElement("p")
+        newTag.innerHTML = labelInput.value
+
+        labelData.push(labelInput.value)
+
+        setLabelData(labelData)
+
+        container.append(newTag)
+        labelInput.value = ""
+      }
+    } else {
+      let formData = Object.fromEntries(new FormData(form))
+      
+      if (formData.title == "") {
+        alert("Title field must be filled.")
+      } else {
+        let cardData = await createTask(props.id, formData.title, formData.description, formData.color, labelData)
+        
+        console.log(taskData)
+        console.log("card created: ", cardData.data)
+
+        taskData.push(cardData.data)
+        setTaskData(taskData)
+        genBoardCards()
+      }
+    }
+  }
 
   return (
     <div 
@@ -45,8 +149,23 @@ function board(props) {
     onDragLeave={_ => DragLeave()}
     onDragEnd={_ => DragEnd()}
     >
-      <h2>{props.title}</h2>
-      <div className={"card-container"}>
+      <h2>{props.title} <span onClick={e => handleToggleAddCard(e)} className="toggleAddCard">+</span></h2>
+
+      <form className="addCard hidden" action="" onSubmit={event => handleFormSubmit(event)} >
+        <input name="title" placeholder="Title.." pattern="[a-zA-Z0-9 ]+"/>
+        <textarea name="description" placeholder="Description.." pattern="[a-zA-Z0-9 ]+"></textarea>
+        <div className="labels">
+          <div className="labelContainer">
+          </div>
+          <div className="labelInsert">
+            <input name="label" placeholder="New label..." maxLength="28" pattern="[a-zA-Z0-9 ]+"/>
+            <span>Card color</span>
+            <input type="color" name="color" className="color-picker" defaultValue="#7678D1"/>
+          </div>
+        </div>
+        <button className="submitCreateCard">Create</button>
+      </form>
+      <div className={"cardContainer"}>
         {cardsData}
       </div>
     </div>

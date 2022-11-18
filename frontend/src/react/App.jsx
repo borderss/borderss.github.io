@@ -50,7 +50,6 @@ function App() {
     ;[...document.querySelectorAll(".form-field")].forEach((e) => {
       e.reset()
     })
-    console.log(state)
   }
 
   return (

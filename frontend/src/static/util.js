@@ -144,23 +144,22 @@ const getUserTasks = () => {
   }
 }
 
-const createTask = (board, title, desc = null, color) => {
-  let bodyData = JSON.stringify({
-    user_id: getUser().user.id,
-    board_id: board,
-    title: title,
-    ...(desc && {desc: desc}),
-    color: color
-  })
-
+const createTask = async (board, title, desc = null, color, labels = null) => {
   if (userExists()) {
-    var data = apiMethod("/tasks", {
+    let data = await apiMethod("/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
       },
-      body: bodyData
+      body: JSON.stringify({
+        user_id: getUser().user.id,
+        board_id: board,
+        title: title,
+        desc,
+        labels,
+        color: color
+      })
     })
 
     return data
@@ -171,25 +170,16 @@ const createTask = (board, title, desc = null, color) => {
 }
 
 const deleteTask = (id) => {
-  let bodyData = JSON.stringify({
-    user_id: getUser().user.id,
-    board_id: board,
-    title: title,
-    ...(desc && {desc: desc}),
-    color: color
-  })
-
   if (userExists()) {
-    var data = apiMethod("/tasks", {
+    apiMethod(`/tasks/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
-      },
-      body: bodyData
+      }
+    }).then((data) => {
+      return data
     })
-
-    return data
   } else {
     console.warn("Unauthenticated.")
     return null
@@ -197,25 +187,23 @@ const deleteTask = (id) => {
 }
 
 const createLabel = (task_id, value) => {
-  let bodyData = JSON.stringify({
-    user_id: getUser().user.id,
-    board_id: board,
-    title: title,
-    ...(desc && {desc: desc}),
-    color: color
-  })
-
+  console.log(typeof(task_id), typeof(value))
   if (userExists()) {
-    var data = apiMethod("/tasks", {
+    apiMethod("/labels", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
       },
-      body: bodyData
+      body: JSON.stringify({
+        task_id: task_id,
+        value: value,
+      })
+    }).then((data) => {
+      data
+    }).catch(err => {
+      console.log(err)
     })
-
-    return data
   } else {
     console.warn("Unauthenticated.")
     return null
@@ -223,25 +211,16 @@ const createLabel = (task_id, value) => {
 }
 
 const deleteLabel = (id) => {
-  let bodyData = JSON.stringify({
-    user_id: getUser().user.id,
-    board_id: board,
-    title: title,
-    ...(desc && {desc: desc}),
-    color: color
-  })
-
   if (userExists()) {
-    var data = apiMethod("/tasks", {
+    var data = apiMethod(`/labels/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
       },
-      body: bodyData
+    }).then((data) => {
+      data
     })
-
-    return data
   } else {
     console.warn("Unauthenticated.")
     return null
@@ -260,6 +239,9 @@ export {
   logoutUser,
   userExists,
   getBoards,
-  createTask,
   getUserTasks,
+  createTask,
+  deleteTask,
+  createLabel,
+  deleteLabel
 }
