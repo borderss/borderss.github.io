@@ -36,10 +36,10 @@ class TaskController extends Controller
     return new TaskResource($task);
   }
 
-  public function update(TaskRequest $request, Task $task)
+  public function update(TaskRequest $request, $id)
   {
-    $task->update($request->validated());
-    return new TaskResource($task);
+    Task::find($id)->update($request->validated());
+    return new TaskResource(Task::find($id));
   }
 
   public function destroy($id)

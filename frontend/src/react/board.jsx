@@ -27,7 +27,6 @@ function board(props) {
 
       data.tasks.forEach((task) => {
         if(task.board_id == props.id){
-          console.log("new task")
           localTasks.push(task)
         }
       })
@@ -47,6 +46,7 @@ function board(props) {
           <Card
             key={task.id}
             id={task.id}
+            board_id={props.id}
             title={task.title}
             desc={task.desc}
             color={task.color}
@@ -116,11 +116,19 @@ function board(props) {
         newTag.innerHTML = labelInput.value
 
         labelData.push(labelInput.value)
-
         setLabelData(labelData)
 
         container.append(newTag)
         labelInput.value = ""
+
+        newTag.addEventListener("click", () => {
+          newTag.remove()
+
+          labelData.splice(labelData.indexOf(labelInput.value), 1)
+          console.log(labelData)
+
+          setLabelData(labelData)
+        })
       }
     } else {
       let formData = Object.fromEntries(new FormData(form))
@@ -129,13 +137,12 @@ function board(props) {
         alert("Title field must be filled.")
       } else {
         let cardData = await createTask(props.id, formData.title, formData.description, formData.color, labelData)
-        
-        console.log(taskData)
-        console.log("card created: ", cardData.data)
 
         taskData.push(cardData.data)
         setTaskData(taskData)
         genBoardCards()
+
+        form.reset()
       }
     }
   }

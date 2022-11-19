@@ -1,8 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
+import { getUser, updateTask } from "../static/util";
 
 function card(props) {
   let target
   let labelArr = new Array()
+  const textAreaRef = useRef(null)
 
   if (props.labels) {
     props.labels.forEach(label => {
@@ -10,11 +14,31 @@ function card(props) {
     })
   }
 
-  function handleChange(e) {
-      e.target.style.transition = ""
-      e.target.style.height = "5px"
-      e.target.style.height = e.target.scrollHeight + "px"
+  function handleChange(e, bool) {
+      if (bool) {
+        e.target.style.transition = ""
+        e.target.style.height = "5px"
+        e.target.style.height = e.target.scrollHeight + "px"
+      }
+
+      if (e.key == "Enter") {
+        e.preventDefault()
+        e.target.blur()
+        let formData = Object.fromEntries(new FormData(e.target.closest("form")))
+
+        let a = updateTask(props.id, props.board_id, getUser().user.id, formData.cardTitle, formData.cardDescription, props.labels, props.color)
+        console.log(a)
+      }
   }
+
+  useEffect(() => {
+    if (textAreaRef && textAreaRef.current && textAreaRef.current.style) {
+      textAreaRef.current.style.transition = ""
+      textAreaRef.current.style.height = "5px"
+      textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px"
+    }
+  })
+
 
   const handleDragStart = (e, key) => {
     e.dataTransfer.setData("key", key)
@@ -49,14 +73,14 @@ function card(props) {
     onDragStart={e => handleDragStart(e, props.id)}
     onDragEnter={e => handleDragEnter(e)}
     onDragLeave={e => handleDragLeave(e)}
-    onDragEnd={_ => handleDragEnd()}>
-      
-      <input className="cardFormTitle" name="cardTitle" placeholder="Title.." required pattern="[a-zA-Z0-9 ]+" defaultValue={props.title}></input>
-      {props.desc ? <textarea onInput={(e) => {handleChange(e)}} className="cardFormDesc" name="cardDescription" placeholder="Description.." pattern="[a-zA-Z0-9 ]+" defaultValue={props.desc}></textarea> : ""}
+    onDragEnd={_ => handleDragEnd()}
+    >      
+      <input className="cardFormTitle" name="cardTitle" onKeyDown={(e) => {handleChange(e, false)}} placeholder="Title.." required pattern="[a-zA-Z0-9 ]+" defaultValue={props.title}></input>
+      {props.desc ? <textarea ref={textAreaRef} onKeyDown={(e) => {handleChange(e)}} className="cardFormDesc" name="cardDescription" placeholder="Description.." pattern="[a-zA-Z0-9 ]+" defaultValue={props.desc}></textarea> : ""}
       {labelArr.length > 0 ? <div className="labelContainer">{labelArr}</div> : ""}
 
       <span className="hoverOptions">
-        <button className="delete" name="deleteBtn" value="" type="button" onClick={(e) => {props.onCardDelete(props.id)}}>Delete card</button>
+        <button className="delete" name="deleteBtn" value="" type="button" onClick={() => {props.onCardDelete(props.id)}}>Delete card</button>
       </span>
     </form>
   )

@@ -187,6 +187,33 @@ const deleteTask = (id) => {
   }
 }
 
+const updateTask = (id, board_id, user_id, title, desc, labels, color) => {
+  if (userExists()) {
+    apiMethod(`/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+        board_id: board_id,
+        title: title,
+        desc: desc,
+        labels: labels,
+        color: color
+      })
+    }).then((data) => {
+      console.log(data)
+      return data
+    })
+  } else {
+    console.warn("Unauthenticated.")
+    return null
+  }
+}
+
+
 const createLabel = (task_id, value) => {
   console.log(typeof(task_id), typeof(value))
   if (userExists()) {
@@ -243,6 +270,7 @@ export {
   getUserTasks,
   createTask,
   deleteTask,
+  updateTask,
   createLabel,
   deleteLabel
 }
