@@ -92,12 +92,12 @@ body {
   display: flex;
   margin-top: 50px;
   gap: 24px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   transition: 0.5s;
 }
 
-.boards > div {
+.board {
   width: 310px;
   padding: 24px;
   background-color: var(--gray);
