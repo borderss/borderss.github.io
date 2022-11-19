@@ -35,17 +35,15 @@ function card(props) {
         getUser().user.id,
         formData.cardTitle,
         formData.cardDescription,
-        props.labels,
         props.color
       )
 
-      let a = updateTask(
+      updateTask(
         props.id,
         props.board_id,
         getUser().user.id,
         formData.cardTitle,
         formData.cardDescription,
-        props.labels,
         props.color
       )
     }
@@ -59,46 +57,42 @@ function card(props) {
     }
   })
 
-  const handleDragStart = (e, key) => {
-    e.dataTransfer.setData("key", key)
-  }
+  // const handleDragStart = (e, key) => {
+  //   e.dataTransfer.setData("key", key)
+  // }
 
-  const handleDragEnter = (e) => {
-    if (e.target.classList.contains("card")) {
-      target = e.target.closest(".card")
-    }
-    target.setAttribute(
-      "style",
-      `background-color: var(--${props.color}); outline: 2px dashed var(--outline); transform: scale(1.05); transition: transform 0.5s`
-    )
-  }
+  // const handleDragEnter = (e) => {
+  //   if (e.target.classList.contains("card")) {
+  //     target = e.target.closest(".card")
+  //   }
+  //   target.setAttribute(
+  //     "style",
+  //     `background-color: var(--${props.color}); outline: 2px dashed var(--outline); transform: scale(1.05); transition: transform 0.5s`
+  //   )
+  // }
 
-  const handleDragLeave = (e) => {
-    if (e.target.classList.contains("card")) {
-      target.setAttribute(
-        "style",
-        `background-color: var(--${props.color}); transition: transform 0.5s`
-      )
-    }
-  }
+  // const handleDragLeave = (e) => {
+  //   if (e.target.classList.contains("card")) {
+  //     target.setAttribute(
+  //       "style",
+  //       `background-color: var(--${props.color}); transition: transform 0.5s`
+  //     )
+  //   }
+  // }
 
-  const handleDragEnd = () => {
-    document.querySelectorAll(".card").forEach((card) => {
-      card.style.removeProperty("outline")
-      card.style.removeProperty("transform")
-    })
-  }
+  // const handleDragEnd = () => {
+  //   document.querySelectorAll(".card").forEach((card) => {
+  //     card.style.removeProperty("outline")
+  //     card.style.removeProperty("transform")
+  //   })
+  // }
 
   return (
     <form
       id={props.id}
-      draggable
-      className="card draggable"
+      className="card"
       style={{ backgroundColor: props.color }}
-      onDragStart={(e) => handleDragStart(e, props.id)}
-      onDragEnter={(e) => handleDragEnter(e)}
-      onDragLeave={(e) => handleDragLeave(e)}
-      onDragEnd={(_) => handleDragEnd()}
+      spellCheck="false"
     >
       <input
         className="cardFormTitle"

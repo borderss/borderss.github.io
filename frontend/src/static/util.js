@@ -1,6 +1,7 @@
 let api = "http://127.0.0.1:8000/api"
 
 const apiMethod = async (endpoint = "", requestParams) => {
+  console.log(api + endpoint)
   const response = await fetch(api + endpoint, requestParams)
   const data = await response.json()
 
@@ -187,10 +188,11 @@ const deleteTask = (id) => {
   }
 }
 
-const updateTask = (id, board_id, user_id, title, desc = null, labels, color) => {
+const updateTask = (id, board_id, user_id, title, desc = null, color) => {
   if (userExists()) {
-    apiMethod(`/tasks/${id}`, {
-      method: "PUT",
+    console.log(api+'/tasks/'+id)
+    apiMethod('/tasks/'+id, {
+      method: 'PUT',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -200,12 +202,15 @@ const updateTask = (id, board_id, user_id, title, desc = null, labels, color) =>
         board_id: board_id,
         title: title,
         desc: desc,
-        labels: labels,
         color: color
-      })
+      }),
+      mode: 'cors',
+      redirect: 'follow',
+      credentials: 'same-origin'
     }).then((data) => {
-      console.log(data)
       return data
+    }).catch(err => {
+      console.log(err)
     })
   } else {
     console.warn("Unauthenticated.")

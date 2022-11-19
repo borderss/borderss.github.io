@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getUserTasks, createTask, deleteTask, createLabel, deleteLabel, getUser } from "../static/util"
 import Card from "./card"
 
+var data = await getUserTasks()
 
 function board(props) {
   const [taskData, setTaskData] = useState([])
@@ -21,8 +22,6 @@ function board(props) {
 
   async function fetchUserTasks() {
     if (getUser()) {
-      var data = await getUserTasks()
-
       var localTasks = new Array()
 
       data.tasks.forEach((task) => {
@@ -110,7 +109,7 @@ function board(props) {
     let form = e.target.closest("form")
 
     if (labelInput == document.activeElement) {
-      if (labelInput.value != "") {
+      if (labelInput.value != "" && labelInput.value.replace(/\s/g, '').length) {
         let container = field.querySelector(".labelContainer")
         let newTag = document.createElement("p")
         newTag.innerHTML = labelInput.value
@@ -143,6 +142,9 @@ function board(props) {
         genBoardCards()
 
         form.reset()
+        setLabelData(new Array())
+
+        field.querySelector(".labelContainer").innerHTML = ""
       }
     }
   }
