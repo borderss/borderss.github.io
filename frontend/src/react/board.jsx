@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getUserTasks, createTask, deleteTask, createLabel, deleteLabel, getUser } from "../static/util"
+import { getUserTasks, createTask, deleteTask, getUser } from "../static/util"
 import Card from "./card"
 
 var data = await getUserTasks()
