@@ -4,7 +4,6 @@ import Board from "./board"
 
 export default function Boards() {
   const [boards, setBoards] = useState([])
-  const [result, setResult] = useState([])
 
   async function fetchBoards() {
     if (getUser()) {

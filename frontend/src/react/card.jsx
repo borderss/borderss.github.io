@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react"
 import { getUser, updateTask } from "../static/util"
 
 function card(props) {
-  let target
   let labelArr = new Array()
   const textAreaRef = useRef(null)
 

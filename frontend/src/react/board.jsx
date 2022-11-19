@@ -34,8 +34,6 @@ function board(props) {
     }
   }
 
-  let target 
-
   const genBoardCards = () => {
     let tempData = new Array()
 
@@ -59,6 +57,7 @@ function board(props) {
     }
   }
 
+  /*
   const DragEnter = (e) => {
     if (e.target.classList.contains("board")) {
       target = e.target
@@ -79,6 +78,8 @@ function board(props) {
       board.setAttribute("style", `background-color: var(--gray); transition: box-shadow 0.5s, transform 0.5s`)
     })
   }
+
+  */
 
   let cardsData = tasks.length > 0 ? tasks : (
     <div className={"empty-card-hint"}>
