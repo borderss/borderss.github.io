@@ -187,7 +187,7 @@ const deleteTask = (id) => {
   }
 }
 
-const updateTask = (id, board_id, user_id, title, desc, labels, color) => {
+const updateTask = (id, board_id, user_id, title, desc = null, labels, color) => {
   if (userExists()) {
     apiMethod(`/tasks/${id}`, {
       method: "PUT",
