@@ -1,7 +1,5 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { getUserTasks, createTask, deleteTask, getUser } from "../static/util"
+import React, { useEffect, useState } from "react"
+import { createTask, deleteTask, getUser, getUserTasks } from "../static/util"
 import Card from "./card"
 
 var data = await getUserTasks()
@@ -10,7 +8,6 @@ function board(props) {
   const [taskData, setTaskData] = useState([])
   const [labelData, setLabelData] = useState([])
   const [tasks, setTasks] = useState([])
-
 
   useEffect(() => {
     fetchUserTasks()
@@ -25,7 +22,7 @@ function board(props) {
       var localTasks = new Array()
 
       data.tasks.forEach((task) => {
-        if(task.board_id == props.id){
+        if (task.board_id == props.id) {
           localTasks.push(task)
         }
       })
@@ -81,24 +78,32 @@ function board(props) {
 
   */
 
-  let cardsData = tasks.length > 0 ? tasks : (
-    <div className={"empty-card-hint"}>
-      Drop a card here!
-    </div>
-  )
+  let cardsData =
+    tasks.length > 0 ? (
+      tasks
+    ) : (
+      <div className={"empty-card-hint"}>Drop a card here!</div>
+    )
 
-  document.querySelectorAll(".board").forEach(board => {
-    board.style.removeProperty('outline')
-    board.setAttribute("style", `background-color: var(--gray); transition: box-shadow 0.5s, transform 0.5s`)
+  document.querySelectorAll(".board").forEach((board) => {
+    board.style.removeProperty("outline")
+    board.setAttribute(
+      "style",
+      `background-color: var(--gray); transition: box-shadow 0.5s, transform 0.5s`
+    )
   })
 
-  const handleToggleAddCard = (event)=> {
-    document.querySelectorAll(".addCard").forEach(e => {
-      if (e != event.target.parentElement.parentElement.querySelector(".addCard")) {
+  const handleToggleAddCard = (event) => {
+    document.querySelectorAll(".addCard").forEach((e) => {
+      if (
+        e != event.target.parentElement.parentElement.querySelector(".addCard")
+      ) {
         e.classList.add("hidden")
       }
     })
-    event.target.parentElement.parentElement.querySelector(".addCard").classList.toggle("hidden")
+    event.target.parentElement.parentElement
+      .querySelector(".addCard")
+      .classList.toggle("hidden")
   }
 
   const handleFormSubmit = async (e) => {
@@ -110,7 +115,10 @@ function board(props) {
     let form = e.target.closest("form")
 
     if (labelInput == document.activeElement) {
-      if (labelInput.value != "" && labelInput.value.replace(/\s/g, '').length) {
+      if (
+        labelInput.value != "" &&
+        labelInput.value.replace(/\s/g, "").length
+      ) {
         let container = field.querySelector(".labelContainer")
         let newTag = document.createElement("p")
         newTag.innerHTML = labelInput.value
@@ -132,11 +140,17 @@ function board(props) {
       }
     } else {
       let formData = Object.fromEntries(new FormData(form))
-      
+
       if (formData.title == "") {
         alert("Title field must be filled.")
       } else {
-        let cardData = await createTask(props.id, formData.title, formData.description, formData.color, labelData)
+        let cardData = await createTask(
+          props.id,
+          formData.title,
+          formData.description,
+          formData.color,
+          labelData
+        )
 
         taskData.push(cardData.data)
         setTaskData(taskData)
@@ -151,7 +165,7 @@ function board(props) {
   }
 
   const handleCardDelete = (card_id) => {
-    taskData.forEach(task => {
+    taskData.forEach((task) => {
       if (task.id == card_id) {
         taskData.splice(taskData.indexOf(task), 1)
 
@@ -164,34 +178,54 @@ function board(props) {
   }
 
   return (
-    <div 
-    id={props.id} 
-    className={"board"} 
-    onDragOver={props.dragOver} 
-    onDrop={props.onDrop}
-    onDragEnter={e => DragEnter(e)}
-    onDragLeave={_ => DragLeave()}
-    onDragEnd={_ => DragEnd()}
+    <div
+      id={props.id}
+      className={"board"}
+      onDragOver={props.dragOver}
+      onDrop={props.onDrop}
+      onDragEnter={(e) => DragEnter(e)}
+      onDragLeave={(_) => DragLeave()}
+      onDragEnd={(_) => DragEnd()}
     >
-      <h2>{props.title} <span onClick={e => handleToggleAddCard(e)} className="toggleAddCard">+</span></h2>
+      <h2>
+        {props.title}{" "}
+        <span onClick={(e) => handleToggleAddCard(e)} className="toggleAddCard">
+          +
+        </span>
+      </h2>
 
-      <form className="addCard hidden" action="" onSubmit={event => handleFormSubmit(event)} >
-        <input name="title" placeholder="Title.." pattern="[a-zA-Z0-9 ]+"/>
-        <textarea name="description" placeholder="Description.." pattern="[a-zA-Z0-9 ]+"></textarea>
+      <form
+        className="addCard hidden"
+        action=""
+        onSubmit={(event) => handleFormSubmit(event)}
+      >
+        <input name="title" placeholder="Title.." pattern="[a-zA-Z0-9 ]+" />
+        <textarea
+          name="description"
+          placeholder="Description.."
+          pattern="[a-zA-Z0-9 ]+"
+        ></textarea>
         <div className="labels">
-          <div className="labelContainer">
-          </div>
+          <div className="labelContainer"></div>
           <div className="labelInsert">
-            <input name="label" placeholder="New label..." maxLength="28" pattern="[a-zA-Z0-9 ]+"/>
+            <input
+              name="label"
+              placeholder="New label..."
+              maxLength="28"
+              pattern="[a-zA-Z0-9 ]+"
+            />
             <span>Card color</span>
-            <input type="color" name="color" className="color-picker" defaultValue="#7678D1"/>
+            <input
+              type="color"
+              name="color"
+              className="color-picker"
+              defaultValue="#7678D1"
+            />
           </div>
         </div>
         <button className="submitCreateCard">Create</button>
       </form>
-      <div className={"cardContainer"}>
-        {cardsData}
-      </div>
+      <div className={"cardContainer"}>{cardsData}</div>
     </div>
   )
 }
