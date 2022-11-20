@@ -91,8 +91,7 @@ function card(props) {
       id={props.id}
       className="card"
       style={{ backgroundColor: props.color }}
-      spellCheck="false"
-    >
+      spellCheck="false">
       <input
         className="cardFormTitle"
         name="cardTitle"
@@ -102,8 +101,7 @@ function card(props) {
         placeholder="Title.."
         required
         pattern="[a-zA-Z0-9 ]+"
-        defaultValue={props.title}
-      ></input>
+        defaultValue={props.title}></input>
       {props.desc ? (
         <textarea
           ref={textAreaRef}
@@ -114,8 +112,7 @@ function card(props) {
           name="cardDescription"
           placeholder="Description.."
           pattern="[a-zA-Z0-9 ]+"
-          defaultValue={props.desc}
-        ></textarea>
+          defaultValue={props.desc}></textarea>
       ) : (
         ""
       )}
@@ -133,8 +130,7 @@ function card(props) {
           type="button"
           onClick={() => {
             props.onCardDelete(props.id)
-          }}
-        >
+          }}>
           Delete card
         </button>
       </span>
