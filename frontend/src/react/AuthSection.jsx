@@ -40,8 +40,7 @@ export default function AuthSection(props) {
       <form
         ref={profileBtnRef}
         className="form-field hidden"
-        onSubmit={(e) => props.handleFormSubmit(e, "logged_in")}
-      >
+        onSubmit={(e) => props.handleFormSubmit(e, "logged_in")}>
         <button type="submit">Sign out</button>
       </form>
     )
@@ -50,8 +49,7 @@ export default function AuthSection(props) {
       <form
         ref={profileBtnRef}
         className="form-field hidden"
-        onSubmit={(e) => props.handleFormSubmit(e, "login")}
-      >
+        onSubmit={(e) => props.handleFormSubmit(e, "login")}>
         <h3>Login</h3>
         <input
           type="text"
@@ -79,8 +77,7 @@ export default function AuthSection(props) {
       <form
         ref={profileBtnRef}
         className="form-field hidden"
-        onSubmit={(e) => props.handleFormSubmit(e, "register")}
-      >
+        onSubmit={(e) => props.handleFormSubmit(e, "register")}>
         <h3>Registration</h3>
         <input
           type="text"
