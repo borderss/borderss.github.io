@@ -76,10 +76,6 @@ export default function Boards() {
   useEffect(() => {
     fetchBoards()
   }, [])
-  
-  return (
-    <div className={"boards"}>
-      {genBoards()}
-    </div>
-  )
+
+  return <div className={"boards"}>{genBoards()}</div>
 }
