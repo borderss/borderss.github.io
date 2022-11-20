@@ -1,4 +1,3 @@
-
 # Kanban board
 
 A task board created with React and Laravel.
@@ -10,7 +9,7 @@ A task board created with React and Laravel.
 - Front end interface for user actions
 - Only the logged on user's tasks are show
 - Can have any ammount of cards or boards
-![alt text](https://media.discordapp.net/attachments/917176609964974111/1043570309304959036/image.png?width=1332&height=676)
+  ![alt text](https://media.discordapp.net/attachments/917176609964974111/1043570309304959036/image.png?width=1332&height=676)
 - Cards can be created with or without a description or labels
 - Cards can be edited without a refresh
 - Cards can be deleted
