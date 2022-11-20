@@ -424,7 +424,6 @@ input[type="color"]::-webkit-color-swatch {
   border-color: var(--red);
 }
 
-
 .labels > .labelInsert {
   display: flex;
   align-items: center;
