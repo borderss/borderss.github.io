@@ -185,8 +185,7 @@ function board(props) {
       onDrop={props.onDrop}
       onDragEnter={(e) => DragEnter(e)}
       onDragLeave={(_) => DragLeave()}
-      onDragEnd={(_) => DragEnd()}
-    >
+      onDragEnd={(_) => DragEnd()}>
       <h2>
         {props.title}{" "}
         <span onClick={(e) => handleToggleAddCard(e)} className="toggleAddCard">
@@ -197,14 +196,12 @@ function board(props) {
       <form
         className="addCard hidden"
         action=""
-        onSubmit={(event) => handleFormSubmit(event)}
-      >
+        onSubmit={(event) => handleFormSubmit(event)}>
         <input name="title" placeholder="Title.." pattern="[a-zA-Z0-9 ]+" />
         <textarea
           name="description"
           placeholder="Description.."
-          pattern="[a-zA-Z0-9 ]+"
-        ></textarea>
+          pattern="[a-zA-Z0-9 ]+"></textarea>
         <div className="labels">
           <div className="labelContainer"></div>
           <div className="labelInsert">
