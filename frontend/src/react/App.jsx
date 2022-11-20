@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     if (user && user.access_token) {
       setAuthStatus("logged_in")
-    } else if(authStatus != "register") {
+    } else if (authStatus != "register") {
       setAuthStatus("login")
     }
   }, [authStatus])
@@ -37,7 +37,12 @@ function App() {
         break
 
       case "register":
-        registerUser(data.username, data.email, data.password, authStateCallback("login"))
+        registerUser(
+          data.username,
+          data.email,
+          data.password,
+          authStateCallback("login")
+        )
         break
 
       default:
@@ -69,7 +74,11 @@ function App() {
         </a>
       </div>
       <div className="content-field">
-        {authStatus == "logged_in" ? <Boards /> : <p>Please register or sign in.</p>}
+        {authStatus == "logged_in" ? (
+          <Boards />
+        ) : (
+          <p>Please register or sign in.</p>
+        )}
       </div>
     </>
   )
