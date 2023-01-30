@@ -28,7 +28,6 @@ export default function Boards() {
         )
       })
     }
-
     return output
   }
 
@@ -48,10 +47,8 @@ export default function Boards() {
 
     let originBoard = strRegex.exec(cardKey)[0]
     let originId = numRegex.exec(cardKey)[0]
-
     let currData = Object.assign({}, data)
     let entry = currData[originBoard].splice(originId, 1)[0]
-
     let targetBoard = e.target.closest(".board").id
 
     if (
