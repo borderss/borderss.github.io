@@ -31,11 +31,9 @@ function App() {
       case "logged_in":
         logoutUser(authStateCallback("login"))
         break
-
       case "login":
         loginUser(data.email, data.password, authStateCallback("logged_in"))
         break
-
       case "register":
         registerUser(
           data.username,
@@ -44,7 +42,6 @@ function App() {
           authStateCallback("login")
         )
         break
-
       default:
         break
     }
@@ -83,5 +80,4 @@ function App() {
     </>
   )
 }
-
 export default App
