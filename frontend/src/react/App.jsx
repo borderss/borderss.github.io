@@ -25,8 +25,6 @@ function App() {
       setAuthStatus(state)
     }
 
-    console.log(submitType)
-
     switch (submitType) {
       case "logged_in":
         logoutUser(authStateCallback("login"))
